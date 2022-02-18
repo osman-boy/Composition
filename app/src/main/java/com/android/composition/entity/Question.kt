@@ -1,4 +1,4 @@
-package ru.sumin.composition.domain.entity
+package com.android.composition.entity
 
 data class Question(
     val sum: Int,

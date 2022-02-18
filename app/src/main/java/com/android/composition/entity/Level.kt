@@ -1,4 +1,4 @@
-package ru.sumin.composition.domain.entity
+package com.android.composition.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

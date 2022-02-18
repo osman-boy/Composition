@@ -1,7 +1,8 @@
-package ru.sumin.composition.domain.entity
+package com.android.composition.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import ru.sumin.composition.domain.entity.GameSettings
 
 @Parcelize
 data class GameResult(
