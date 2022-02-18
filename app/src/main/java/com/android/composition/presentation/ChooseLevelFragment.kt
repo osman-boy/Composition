@@ -37,13 +37,14 @@ class ChooseLevelFragment : Fragment() {
     private fun launchGameFragment(level: Level) {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, GameFragment.newInstance(level))
-            .addToBackStack(null)
+            .addToBackStack(NAME)
+
             .commit()
     }
 
     companion object {
 
-        val NAME: String? = null
+        val NAME: String = javaClass.simpleName
 
         @JvmStatic
         fun newInstance() =
