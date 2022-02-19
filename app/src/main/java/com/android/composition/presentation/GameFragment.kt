@@ -11,10 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.android.composition.R
 import com.android.composition.databinding.FragmentGameBinding
 import com.android.composition.domain.entity.GameResult
-import com.android.composition.domain.entity.Level
 
 
 class GameFragment : Fragment() {
@@ -51,7 +49,8 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeViewModel()
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         setClickListenersToOptions()
     }
 
