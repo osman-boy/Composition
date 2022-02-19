@@ -41,11 +41,14 @@ class GameFragment : Fragment() {
 
     private fun launchGameFinishedFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
+            .addToBackStack(null).replace(
                 R.id.main_container, GameFragmentFinished.newInstance(
-                    GameResult(true, 12, 13,
-                        GameSettings(12,12,12,13)
-                    ))).commit()
+                    GameResult(
+                        true, 12, 13,
+                        GameSettings(12, 12, 12, 13)
+                    )
+                )
+            ).commit()
     }
 
     private fun parseArguments() {
@@ -54,6 +57,7 @@ class GameFragment : Fragment() {
 
     companion object {
         private const val LEVEL = "level"
+         val NAME= javaClass.name
 
         @JvmStatic
         fun newInstance(level: Level) = GameFragment().apply {

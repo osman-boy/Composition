@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.android.composition.databinding.FragmentGameFinishedBinding
 import com.android.composition.domain.entity.GameResult
 
@@ -33,15 +34,24 @@ class GameFragmentFinished : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(object :OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                retryGame()
-            }
 
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    retryGame()
+                }
+
+            })
+
+        binding.buttonRetry.setOnClickListener {
+            retryGame()
+        }
     }
     fun retryGame() {
-        requireActivity().supportFragmentManager.popBackStack(ChooseLevelFragment.NAME, 0)
+        requireActivity().supportFragmentManager.popBackStack(
+            GameFragment.NAME,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
     }
 
     private fun parseArguments() {
