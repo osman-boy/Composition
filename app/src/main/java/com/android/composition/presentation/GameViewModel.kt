@@ -18,21 +18,14 @@ import com.android.composition.domain.usecases.GetGameSettingsUseCase
 
 
 class GameViewModel(private val application: Application,private val level: Level) : ViewModel() {
-    init {
-        getGameSettings()
-        startTimer()
-        generateQuestion()
-        updateProgress()
-    }
-
     private lateinit var gameSettings: GameSettings
-
     private val repository = GameRepositoryImpl
 
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
     private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
-
     private var timer: CountDownTimer? = null
+
+
 
     private val _formattedTime = MutableLiveData<String>()
     val formattedTime: LiveData<String>
@@ -69,6 +62,12 @@ class GameViewModel(private val application: Application,private val level: Leve
     private var countOfRightAnswers = 0
     private var countOfQuestions = 0
 
+    init {
+        getGameSettings()
+        startTimer()
+        generateQuestion()
+        updateProgress()
+    }
 
     fun chooseAnswer(number: Int) {
         checkAnswer(number)
