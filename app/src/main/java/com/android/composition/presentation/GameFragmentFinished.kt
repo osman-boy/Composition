@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.android.composition.R
 import com.android.composition.databinding.FragmentGameFinishedBinding
 import com.android.composition.domain.entity.GameResult
 
@@ -46,7 +47,46 @@ class GameFragmentFinished : Fragment() {
         binding.buttonRetry.setOnClickListener {
             retryGame()
         }
+        val image = if (gameResult.winner) R.drawable.ic_smile else R.drawable.ic_sad
+        binding.emojiResult.setImageResource(image)
+
+        bindViews()
+
     }
+
+    private fun bindViews() {
+        with(binding) {
+            emojiResult.setImageResource(getSmileResId())
+            tvRequiredAnswers.text = String.format(
+                getString(R.string.required_score),
+                gameResult.gameSettings.minCountOfRightAnswers
+            )
+            tvScoreAnswers.text = String.format(
+                getString(R.string.score_answers),
+                gameResult.countOfRightAnswers
+            )
+            tvRequiredPercentage.text = String.format(
+                getString(R.string.required_percentage),
+                gameResult.gameSettings.minPercentOfRightAnswers
+            )
+            tvScorePercentage.text = String.format(
+                getString(R.string.score_percentage),
+                getPercentOfRightAnswers()
+            )
+        }
+    }
+
+    private fun getSmileResId() = if (gameResult.winner) R.drawable.ic_smile else R.drawable.ic_sad
+
+
+    private fun getPercentOfRightAnswers() = with(gameResult) {
+        if (countOfQuestions == 0) {
+            0
+        } else {
+            ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+        }
+    }
+
     fun retryGame() {
         requireActivity().supportFragmentManager.popBackStack(
             GameFragment.NAME,
